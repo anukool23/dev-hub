@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const userSchema = new mongoose.Schema({
     firstName: { 
         type: String, 
         maxLength: 50,
-        minLength: 2
+        minLength: 2,
+        required:true
     },
     lastName: { 
         type: String 
@@ -42,11 +46,36 @@ const userSchema = new mongoose.Schema({
                 throw new Error("Skills can't be more than 5")
             }
         }
+    },
+    about:{
+        type:String,
+    },
+    facebook:{
+        type:String
+    },
+    instagram:{
+        type:String
+    },
+    linkedin:{
+        type:String
+    },
+    photoUrl:{
+        type:String
+    },
+    age:{
+        type:String
     }
-},{
+}
+,{
     timestamps: true,
     optimisticConcurrency: true
 }
 );
+
+userSchema.methods.getJWT = function(){
+    const token = jwt.sign({_id:this._id},JWT_SECRET,{expiresIn:"1d"})
+    return token;
+}
+
 
 module.exports = mongoose.model("User", userSchema);
