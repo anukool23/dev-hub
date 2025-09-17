@@ -1,5 +1,5 @@
 const express = require("express");
-const user = require("../models/user");
+const user = require("../models/user.model");
 const connectionRequest = require("../models/request.model");
 const { mongoose, Mongoose } = require("mongoose");
 

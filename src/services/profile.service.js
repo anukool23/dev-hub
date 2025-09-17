@@ -1,4 +1,4 @@
-const user = require("../models/user");
+const user = require("../models/user.model");
 const { comparedPassword, hashPassword } = require("../utils/passwordHash");
 const { validateUpdateProfile } = require("../utils/validation");
 
